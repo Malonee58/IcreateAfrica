@@ -1,0 +1,136 @@
+.services {
+  padding: 7rem 0;
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+
+.services-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.services-orb {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(107, 15, 191, 0.25) 0%, transparent 70%);
+  top: -150px;
+  left: -150px;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.services-header .section-label {
+  justify-content: center;
+}
+
+.services-header .section-subtitle {
+  margin: 0.75rem auto 0;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================
+   SERVICE CARD
+========================== */
+.service-card {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 340px;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  border-radius: 20px;
+  cursor: pointer;
+
+  /* Always fill card */
+  background-size: 140%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  transition:
+    transform .35s ease,
+    background-size .45s ease,
+    box-shadow .35s ease,
+    border-color .35s ease;
+}
+
+/* Much lighter overlay */
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.45) 0%,
+    rgba(0,0,0,.20) 45%,
+    rgba(0,0,0,.05) 100%
+  );
+
+  z-index: 1;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+
+  /* Still fills card while zooming */
+  background-size: 150%;
+
+  border-color: var(--purple);
+  box-shadow: 0 18px 45px rgba(107,15,191,.35);
+}
+
+.service-title,
+.service-desc {
+  position: relative;
+  z-index: 2;
+}
+
+.service-title {
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+.service-desc {
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    min-height: 300px;
+  }
+}

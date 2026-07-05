@@ -1,0 +1,114 @@
+.about {
+	padding: 7rem 0;
+	background: var(--white);
+}
+.about-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 5rem;
+	align-items: center;
+}
+.Himage {
+	width: 500px;
+	height: auto;
+}
+.about-img-frame {
+	position: relative;
+}
+.about-img {
+	width: 500px;
+	aspect-ratio: 4/5;
+	border-radius: 16px;
+}
+.about-experience-badge {
+	z-index: 19999;
+	position: absolute;
+	bottom: -1.5rem;
+	right: -1.5rem;
+	background: var(--black);
+	color: #fff;
+	padding: 1.25rem 1.5rem;
+	border-radius: 12px;
+	text-align: center;
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+	border: 1px solid rgba(107, 15, 191, 0.3);
+}
+.exp-num {
+	display: block;
+	font-family: var(--font-display);
+	font-size: 2rem;
+	font-weight: 800;
+	color: var(--purple-light);
+	letter-spacing: -0.02em;
+	line-height: 1;
+}
+.exp-text {
+	font-size: 0.75rem;
+	color: rgba(255, 255, 255, 0.6);
+	font-family: var(--font-display);
+	letter-spacing: 0.05em;
+}
+.about-body {
+	color: var(--mid);
+	line-height: 1.75;
+	margin-bottom: 2rem;
+	font-size: 0.95rem;
+}
+.about-stats {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+.about-stat-card {
+	background: var(--purple-subtle);
+	border: 1px solid rgba(107, 15, 191, 0.12);
+	border-radius: 12px;
+	padding: 1.25rem 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.25rem;
+	transition:
+		border-color 0.2s,
+		box-shadow 0.2s;
+}
+.about-stat-card:hover {
+	border-color: var(--purple);
+	box-shadow: 0 4px 20px var(--purple-glow);
+}
+.stat-icon {
+	font-size: 1.25rem;
+}
+.stat-num {
+	font-family: var(--font-display);
+	font-size: 1.6rem;
+	font-weight: 800;
+	color: var(--purple);
+	letter-spacing: -0.02em;
+	line-height: 1;
+}
+.stat-label {
+	font-size: 0.75rem;
+	color: var(--mid);
+	font-weight: 500;
+}
+.about-actions {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+	.about-grid {
+		grid-template-columns: 1fr;
+		gap: 3rem;
+	}
+	.about-img {
+		aspect-ratio: 16/9;
+	}
+	.about-experience-badge {
+		right: 0.5rem;
+		bottom: -1rem;
+	}
+}

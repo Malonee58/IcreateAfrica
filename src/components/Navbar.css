@@ -1,0 +1,125 @@
+.navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000000;
+	padding: 1.25rem 0;
+	transition: all 0.3s ease;
+}
+.Logoimg {
+	width: 100%;
+	height: 100%;
+	display: block;
+	object-fit: cover;
+	border-radius: 5%;
+}
+
+.navbar.scrolled {
+	background: rgba(15, 15, 20, 0.96);
+	backdrop-filter: blur(12px);
+	padding: 0.85rem 0;
+	border-bottom: 1px solid rgba(107, 15, 191, 0.2);
+	box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+}
+.nav-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.nav-logo {
+	text-decoration: none;
+}
+.logo-placeholder {
+	width: 180px;
+	height: 60px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.logo-placeholder svg {
+	width: 20px;
+	height: 20px;
+	color: var(--purple-light);
+}
+.nav-links {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	list-style: none;
+}
+.nav-links a {
+	color: rgba(255, 255, 255, 0.8);
+	text-decoration: none;
+	font-family: var(--font-display);
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	padding: 0.5rem 0.75rem;
+	border-radius: 6px;
+	transition:
+		color 0.2s,
+		background 0.2s;
+}
+.nav-links a:hover {
+	color: #fff;
+	background: rgba(107, 15, 191, 0.2);
+}
+.nav-cta {
+	padding: 0.65rem 1.25rem !important;
+	margin-left: 0.5rem;
+}
+.nav-burger {
+	display: none;
+	flex-direction: column;
+	gap: 5px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0.5rem;
+}
+.nav-burger span {
+	display: block;
+	width: 24px;
+	height: 2px;
+	background: #fff;
+	border-radius: 2px;
+	transition: all 0.3s;
+}
+.nav-burger.active span:nth-child(1) {
+	transform: rotate(45deg) translate(5px, 5px);
+}
+.nav-burger.active span:nth-child(2) {
+	opacity: 0;
+}
+.nav-burger.active span:nth-child(3) {
+	transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@media (max-width: 768px) {
+	.nav-burger {
+		display: flex;
+	}
+	.nav-links {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		background: rgba(15, 15, 20, 0.98);
+		padding: 5rem 2rem 2rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+		height: 100vh;
+	}
+	.nav-links.open {
+		display: flex;
+	}
+	.nav-links a {
+		font-size: 1.1rem;
+		padding: 0.75rem 0.5rem;
+		width: 100%;
+	}
+}

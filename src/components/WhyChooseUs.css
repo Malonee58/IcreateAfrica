@@ -1,0 +1,101 @@
+.why {
+	padding: 7rem 0;
+	background: var(--dark);
+	position: relative;
+	overflow: hidden;
+}
+.why-card:nth-child(1) .why-icon svg {
+	stroke: #f59e0b;
+} /* Trophy - Gold */
+.why-card:nth-child(2) .why-icon svg {
+	stroke: #3b82f6;
+} /* Fast Delivery */
+.why-card:nth-child(3) .why-icon svg {
+	stroke: #22c55e;
+} /* Pricing */
+.why-card:nth-child(4) .why-icon svg {
+	stroke: #ec4899;
+} /* Team */
+.why-card:nth-child(5) .why-icon svg {
+	stroke: #6366f1;
+} /* Equipment */
+.why-card:nth-child(6) .why-icon svg {
+	stroke: #ef4444;
+} /* Satisfaction */
+
+.why-card:hover .why-icon svg {
+	stroke: #fff;
+}
+.why-bg {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+.why-orb {
+	position: absolute;
+	width: 700px;
+	height: 700px;
+	background: radial-gradient(
+		circle,
+		rgba(107, 15, 191, 0.15) 0%,
+		transparent 70%
+	);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+	filter: blur(80px);
+}
+.why-header {
+	margin-bottom: 3.5rem;
+}
+.why-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1.5rem;
+	position: relative;
+	z-index: 1;
+}
+.why-card {
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(107, 15, 191, 0.15);
+	border-radius: 16px;
+	padding: 2rem 1.75rem;
+	transition:
+		transform 0.3s,
+		border-color 0.3s,
+		background 0.3s;
+}
+.why-card:hover {
+	transform: translateY(-4px);
+	border-color: rgba(107, 15, 191, 0.5);
+	background: rgba(107, 15, 191, 0.08);
+}
+.why-icon {
+	font-size: 2.25rem;
+	margin-bottom: 1.1rem;
+	display: block;
+}
+.why-title {
+	font-family: var(--font-display);
+	font-size: 1.05rem;
+	font-weight: 700;
+	color: #fff;
+	margin-bottom: 0.65rem;
+}
+.why-desc {
+	font-size: 0.875rem;
+	color: rgba(255, 255, 255, 0.5);
+	line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+	.why-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+@media (max-width: 480px) {
+	.why-grid {
+		grid-template-columns: 1fr;
+	}
+}
