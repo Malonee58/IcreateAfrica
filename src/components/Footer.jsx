@@ -1,5 +1,6 @@
 import React from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
+import logoImage from "../assets/images/Icreate-africa.png";
 import "./Footer.css";
 
 const scrollTo = (id) =>
@@ -12,16 +13,13 @@ export default function Footer() {
 				<div className="container footer-grid">
 					<div className="footer-brand">
 						<div className="footer-logo">
-							<svg
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-							>
-								<rect x="3" y="3" width="18" height="18" rx="2" />
-								<path d="M3 9h18M9 21V9" />
-							</svg>
-							<span>YOUR LOGO</span>
+							<span>
+								<img
+									src={logoImage}
+									alt="Icreate Africa Ltd"
+									className="Logoimg"
+								/>
+							</span>
 						</div>
 						<p className="footer-tagline">
 							Premium printing and branding solutions for businesses that refuse
