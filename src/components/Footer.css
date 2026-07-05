@@ -112,4 +112,6 @@
 @media (max-width: 600px) {
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom-inner { flex-direction: column; text-align: center; }
+  .footer-bottom-links { justify-content: center; flex-wrap: wrap; }
+  .footer-tagline { max-width: 100%; }
 }

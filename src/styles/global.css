@@ -2,6 +2,23 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Fluid foundations: stop any element from forcing horizontal scroll,
+   and make media scale instead of overflowing their container. */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+#root, .app {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+img, svg, video, picture {
+  max-width: 100%;
+  height: auto;
+}
+
 :root {
   --purple: #6B0FBF;
   --purple-light: #8B2FDF;
@@ -172,7 +189,29 @@ body {
 
 /* Container */
 .container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 clamp(1rem, 4vw, 1.5rem);
+}
+
+/* Touch-friendly tap targets on small/medium screens */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-outline,
+  button,
+  a.btn-primary,
+  a.btn-outline {
+    min-height: 44px;
+  }
+}
+
+/* Extra-small phones (320px+) */
+@media (max-width: 360px) {
+  .container {
+    padding: 0 0.85rem;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
+  }
 }

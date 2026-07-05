@@ -53,8 +53,12 @@
   margin-top: 0.15rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
   .testimonials-grid { grid-template-columns: 1fr; }
+  .testimonial-card { padding: 1.5rem; }
 }
 .testimonial-photo {
   display: flex;

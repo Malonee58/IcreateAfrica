@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { Phone, Mail, MapPin, CircleCheckBig, CircleX } from "lucide-react";
 import "./Contact.css";
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+// Optional: only used if you've set up a separate auto-reply template in EmailJS.
 const AUTO_REPLY_TEMPLATE_ID = import.meta.env
 	.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -35,6 +37,10 @@ const SocialIcon = ({ href, label, children }) => (
 export default function Contact() {
 	const formRef = useRef(null);
 
+	// Guards against double-submits (e.g. double-click or double-tap)
+	// in addition to the disabled button state.
+	const isSubmittingRef = useRef(false);
+
 	const [status, setStatus] = useState("idle"); // idle | loading | success | error
 
 	const [errors, setErrors] = useState({});
@@ -46,6 +52,18 @@ export default function Contact() {
 		service: "",
 		message: "",
 	});
+
+	// Initialize EmailJS once, on mount.
+	useEffect(() => {
+		if (PUBLIC_KEY) {
+			emailjs.init(PUBLIC_KEY);
+		} else if (import.meta.env.DEV) {
+			// eslint-disable-next-line no-console
+			console.error(
+				"EmailJS public key is missing. Set VITE_EMAILJS_PUBLIC_KEY in your .env file.",
+			);
+		}
+	}, []);
 
 	const validate = () => {
 		const e = {};
@@ -63,30 +81,24 @@ export default function Contact() {
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 
-		const field =
-			name === "from_name"
-				? "name"
-				: name === "from_email"
-					? "email"
-					: name === "subject"
-						? "service"
-						: name;
-
 		setForm((prev) => ({
 			...prev,
-			[field]: value,
+			[name]: value,
 		}));
 
-		if (errors[field]) {
+		if (errors[name]) {
 			setErrors((prev) => ({
 				...prev,
-				[field]: "",
+				[name]: "",
 			}));
 		}
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		// Prevent duplicate submissions while a request is already in flight.
+		if (isSubmittingRef.current || status === "loading") return;
 
 		const errs = validate();
 
@@ -95,29 +107,58 @@ export default function Contact() {
 			return;
 		}
 
+		if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+			if (import.meta.env.DEV) {
+				// eslint-disable-next-line no-console
+				console.error(
+					"EmailJS is not configured. Check VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your .env file.",
+				);
+			}
+			setStatus("error");
+			setTimeout(() => setStatus("idle"), 5000);
+			return;
+		}
+
+		isSubmittingRef.current = true;
 		setStatus("loading");
 
+		// Template params map directly to the EmailJS template variables:
+		// {{from_name}}, {{from_email}}, {{subject}}, {{message}}
+		const templateParams = {
+			from_name: form.name,
+			from_email: form.email,
+			subject: form.service || "General Inquiry",
+			message: form.message,
+		};
+
 		try {
-			const emailjs = (await import("@emailjs/browser")).default;
+			// Notification to you
+			await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, {
+				publicKey: PUBLIC_KEY,
+			});
 
-			// Send notification to you
-			await emailjs.sendForm(
-				SERVICE_ID,
-				TEMPLATE_ID,
-				formRef.current,
-				PUBLIC_KEY,
-			);
-
-			// Send auto-reply to customer
-			await emailjs.sendForm(
-				SERVICE_ID,
-				AUTO_REPLY_TEMPLATE_ID,
-				formRef.current,
-				PUBLIC_KEY,
-			);
+			// Optional auto-reply to the customer. Failure here shouldn't
+			// block the success state, since the primary notification
+			// already went through.
+			if (AUTO_REPLY_TEMPLATE_ID) {
+				try {
+					await emailjs.send(
+						SERVICE_ID,
+						AUTO_REPLY_TEMPLATE_ID,
+						templateParams,
+						{ publicKey: PUBLIC_KEY },
+					);
+				} catch (autoReplyError) {
+					if (import.meta.env.DEV) {
+						// eslint-disable-next-line no-console
+						console.error("Auto-reply email failed:", autoReplyError);
+					}
+				}
+			}
 
 			setStatus("success");
 
+			// Reset the form only after a successful submission.
 			setForm({
 				name: "",
 				email: "",
@@ -130,11 +171,18 @@ export default function Contact() {
 
 			setTimeout(() => setStatus("idle"), 5000);
 		} catch (error) {
-			console.error(error);
+			// Log useful info in development without exposing sensitive
+			// details (like keys/IDs) in production.
+			if (import.meta.env.DEV) {
+				// eslint-disable-next-line no-console
+				console.error("EmailJS send failed:", error);
+			}
 
 			setStatus("error");
 
 			setTimeout(() => setStatus("idle"), 5000);
+		} finally {
+			isSubmittingRef.current = false;
 		}
 	};
 
@@ -253,7 +301,7 @@ export default function Contact() {
 										id="name"
 										name="name"
 										type="text"
-										placeholder="John Doe"
+										placeholder="Full Name"
 										value={form.name}
 										onChange={handleChange}
 										className={errors.name ? "error" : ""}
@@ -268,7 +316,7 @@ export default function Contact() {
 										id="email"
 										name="email"
 										type="email"
-										placeholder="john@company.com"
+										placeholder="Email Address"
 										value={form.email}
 										onChange={handleChange}
 										className={errors.email ? "error" : ""}
@@ -285,7 +333,7 @@ export default function Contact() {
 										id="phone"
 										name="phone"
 										type="tel"
-										placeholder="+234 XXX XXX XXXX"
+										placeholder="Phone Number"
 										value={form.phone}
 										onChange={handleChange}
 									/>

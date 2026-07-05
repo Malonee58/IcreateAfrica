@@ -117,3 +117,15 @@
   .cta-inner { flex-direction: column; align-items: flex-start; }
   .cta-actions { flex-direction: row; flex-wrap: wrap; width: 100%; }
 }
+
+@media (max-width: 480px) {
+  .cta-actions { flex-direction: column; }
+  .cta-btn-main,
+  .cta-btn-secondary {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+    padding: 0.9rem 1.25rem;
+  }
+}

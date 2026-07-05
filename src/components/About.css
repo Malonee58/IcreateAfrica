@@ -9,14 +9,17 @@
 	align-items: center;
 }
 .Himage {
-	width: 500px;
+	width: 100%;
+	max-width: 500px;
 	height: auto;
 }
 .about-img-frame {
 	position: relative;
+	width: 100%;
 }
 .about-img {
-	width: 500px;
+	width: 100%;
+	max-width: 500px;
 	aspect-ratio: 4/5;
 	border-radius: 16px;
 }
@@ -110,5 +113,17 @@
 	.about-experience-badge {
 		right: 0.5rem;
 		bottom: -1rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.about-stats {
+		grid-template-columns: 1fr;
+	}
+	.about-experience-badge {
+		padding: 1rem 1.1rem;
+	}
+	.exp-num {
+		font-size: 1.6rem;
 	}
 }

@@ -98,4 +98,7 @@
 	.why-grid {
 		grid-template-columns: 1fr;
 	}
+	.why-card {
+		padding: 1.5rem 1.25rem;
+	}
 }

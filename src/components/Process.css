@@ -123,5 +123,6 @@
   .process-connector { display: none; }
 }
 @media (max-width: 480px) {
-  .process-timeline { grid-template-columns: 1fr; }
+  .process-timeline { grid-template-columns: 1fr; gap: 2rem; }
+  .process-step { padding: 0 0.5rem; }
 }
