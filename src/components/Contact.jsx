@@ -3,13 +3,10 @@ import emailjs from "@emailjs/browser";
 import { Phone, Mail, MapPin, CircleCheckBig, CircleX } from "lucide-react";
 import "./Contact.css";
 
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-// Optional: only used if you've set up a separate auto-reply template in EmailJS.
-const AUTO_REPLY_TEMPLATE_ID = import.meta.env
-	.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 const services = [
 	"Business Cards",
 	"Large Format Printing",
@@ -55,8 +52,8 @@ export default function Contact() {
 
 	// Initialize EmailJS once, on mount.
 	useEffect(() => {
-		if (PUBLIC_KEY) {
-			emailjs.init(PUBLIC_KEY);
+		if (publicKey) {
+			emailjs.init(publicKey);
 		} else if (import.meta.env.DEV) {
 			// eslint-disable-next-line no-console
 			console.error(
