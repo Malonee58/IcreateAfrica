@@ -134,12 +134,15 @@
   width: 100%;
   aspect-ratio: 4/3;
   border-radius: 16px;
+  object-fit: cover;
+  object-position: center;
   box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(107,15,191,0.3);
 }
 .hero-img {
   width: 100%;
   aspect-ratio: 4/3;
   border-radius: 16px;
+  overflow: hidden;
   box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(107,15,191,0.3);
 }
 .hero-badge {
@@ -198,4 +201,18 @@
 @media (max-width: 480px) {
   .hero-stats { gap: 1.2rem; }
   .hero-badge { bottom: -15px; left: 10px; font-size: 0.7rem; padding: 0.6rem 1rem; }
+
+  /* Very small phones: the hero photo's frame can run slightly past the
+     viewport edge. Nudge it left and clip to the rounded frame so the
+     full image stays visible with no horizontal scroll. */
+  .hero-image-wrap {
+    overflow: hidden;
+    border-radius: 16px;
+    margin-left: -0.75rem;
+    width: calc(100% + 0.75rem);
+  }
+  .hero-img,
+  .Heroim {
+    transform: translateX(-4%);
+  }
 }

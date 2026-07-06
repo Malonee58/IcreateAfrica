@@ -1,12 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Phone, Mail, MapPin, CircleCheckBig, CircleX } from "lucide-react";
 import "./Contact.css";
 
-const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
-const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+// Optional: only used if you've set up a separate auto-reply template in EmailJS.
+const AUTO_REPLY_TEMPLATE_ID = import.meta.env
+	.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
 const services = [
 	"Business Cards",
 	"Large Format Printing",
@@ -52,8 +55,8 @@ export default function Contact() {
 
 	// Initialize EmailJS once, on mount.
 	useEffect(() => {
-		if (publicKey) {
-			emailjs.init(publicKey);
+		if (PUBLIC_KEY) {
+			emailjs.init(PUBLIC_KEY);
 		} else if (import.meta.env.DEV) {
 			// eslint-disable-next-line no-console
 			console.error(
@@ -120,11 +123,14 @@ export default function Contact() {
 		setStatus("loading");
 
 		// Template params map directly to the EmailJS template variables:
-		// {{from_name}}, {{from_email}}, {{subject}}, {{message}}
+		// {{from_name}}, {{from_email}}, {{service}}, {{message}}
+		// Note: the "Service Required" field maps to the "service" template
+		// variable (not "subject") to match the configured EmailJS template.
 		const templateParams = {
 			from_name: form.name,
 			from_email: form.email,
-			subject: form.service || "General Inquiry",
+			phone: form.phone || "Not provided",
+			service: form.service || "General Inquiry",
 			message: form.message,
 		};
 

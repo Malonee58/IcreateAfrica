@@ -1,7 +1,8 @@
-import React from "react";
 import { Printer, Users, BadgeCheck, Truck } from "lucide-react";
 import "./About.css";
-import companyImage from "../assets/images/Icreateimg.png";
+import companyImageWebp from "../assets/images/Icreateimg.webp";
+import companyImageJpg from "../assets/images/Icreateimg.jpg";
+import { scrollToSection } from "../utils/scroll";
 
 const stats = [
 	{
@@ -45,11 +46,18 @@ export default function About() {
 									<path d="M21 15l-5-5L5 21" />
 								</svg>
 								<span>
-									<img
-										src={companyImage}
-										alt="Icreate Africa Ltd"
-										className="Himage"
-									/>
+									<picture>
+										<source srcSet={companyImageWebp} type="image/webp" />
+										<img
+											src={companyImageJpg}
+											alt="Icreate Africa Ltd"
+											className="Himage"
+											width="900"
+											height="1125"
+											loading="lazy"
+											decoding="async"
+										/>
+									</picture>
 								</span>
 							</div>
 							<div className="about-experience-badge">
@@ -96,9 +104,7 @@ export default function About() {
 								className="btn-primary"
 								onClick={(e) => {
 									e.preventDefault();
-									document
-										.getElementById("contact")
-										?.scrollIntoView({ behavior: "smooth" });
+									scrollToSection("contact");
 								}}
 							>
 								Work With Us
@@ -108,9 +114,7 @@ export default function About() {
 								className="btn-outline"
 								onClick={(e) => {
 									e.preventDefault();
-									document
-										.getElementById("services")
-										?.scrollIntoView({ behavior: "smooth" });
+									scrollToSection("services");
 								}}
 							>
 								Our Services

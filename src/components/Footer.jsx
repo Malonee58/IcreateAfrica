@@ -1,10 +1,9 @@
-import React from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import logoImage from "../assets/images/Icreate-africa.png";
+import { scrollToSection } from "../utils/scroll";
 import "./Footer.css";
 
-const scrollTo = (id) =>
-	document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+const scrollTo = (id) => scrollToSection(id);
 
 export default function Footer() {
 	return (
@@ -18,6 +17,10 @@ export default function Footer() {
 									src={logoImage}
 									alt="Icreate Africa Ltd"
 									className="Logoimg"
+									width="180"
+									height="60"
+									loading="lazy"
+									decoding="async"
 								/>
 							</span>
 						</div>
@@ -26,13 +29,6 @@ export default function Footer() {
 							to blend in. Quality you can see. Results you can measure.
 						</p>
 						<div className="footer-socials">
-							{[
-								{
-									label: "FB",
-									path: "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z",
-									fill: true,
-								},
-							].map(() => null)}
 							<a href="#" className="footer-social" aria-label="Facebook">
 								<svg
 									width="16"

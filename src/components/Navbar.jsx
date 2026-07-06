@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import logoImage from "../assets/images/Icreate-africa.png";
+import { scrollToSection } from "../utils/scroll";
 import "./Navbar.css";
 
 const links = ["Home", "About", "Services", "Portfolio", "Why Us", "Contact"];
@@ -7,10 +8,20 @@ const links = ["Home", "About", "Services", "Portfolio", "Why Us", "Contact"];
 export default function Navbar() {
 	const [scrolled, setScrolled] = useState(false);
 	const [open, setOpen] = useState(false);
+	const tickingRef = useRef(false);
 
 	useEffect(() => {
-		const onScroll = () => setScrolled(window.scrollY > 40);
-		window.addEventListener("scroll", onScroll);
+		// Throttle scroll handling with requestAnimationFrame so we run the
+		// state update at most once per frame instead of on every scroll event.
+		const onScroll = () => {
+			if (tickingRef.current) return;
+			tickingRef.current = true;
+			requestAnimationFrame(() => {
+				setScrolled(window.scrollY > 40);
+				tickingRef.current = false;
+			});
+		};
+		window.addEventListener("scroll", onScroll, { passive: true });
 		return () => window.removeEventListener("scroll", onScroll);
 	}, []);
 
@@ -20,11 +31,8 @@ export default function Navbar() {
 			.toLowerCase()
 			.replace(/\s+/g, "-")
 			.replace("why-us", "why");
-		const el = document.getElementById(id);
-		if (el) {
-			el.scrollIntoView({ behavior: "smooth" });
-			setOpen(false);
-		}
+		scrollToSection(id);
+		setOpen(false);
 	};
 
 	return (
@@ -41,6 +49,9 @@ export default function Navbar() {
 								src={logoImage}
 								alt="Icreate Africa Ltd"
 								className="Logoimg"
+								width="180"
+								height="60"
+								decoding="async"
 							/>
 						</span>
 					</div>

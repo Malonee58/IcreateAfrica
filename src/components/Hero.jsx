@@ -1,10 +1,10 @@
-import React from "react";
-import heroImage from "../assets/images/Hero.png";
+import heroImageWebp from "../assets/images/Hero.webp";
+import heroImageJpg from "../assets/images/Hero.jpg";
+import { scrollToSection } from "../utils/scroll";
 import "./Hero.css";
 
 export default function Hero() {
-	const scrollTo = (id) =>
-		document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+	const scrollTo = (id) => scrollToSection(id);
 
 	return (
 		<section className="hero" id="home">
@@ -91,11 +91,18 @@ export default function Hero() {
 								<path d="M21 15l-5-5L5 21" />
 							</svg>
 							<span>
-								<img
-									src={heroImage}
-									alt="Icreate Africa Ltd"
-									className="Heroim"
-								/>
+								<picture>
+									<source srcSet={heroImageWebp} type="image/webp" />
+									<img
+										src={heroImageJpg}
+										alt="Icreate Africa Ltd"
+										className="Heroim"
+										width="1200"
+										height="800"
+										fetchPriority="high"
+										decoding="async"
+									/>
+								</picture>
 							</span>
 							
 						</div>

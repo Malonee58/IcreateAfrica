@@ -1,4 +1,3 @@
-import React from "react";
 import { MessageCircle, PencilLine, Printer, Truck } from "lucide-react";
 import "./Process.css";
 

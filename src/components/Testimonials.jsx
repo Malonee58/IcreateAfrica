@@ -1,4 +1,3 @@
-import React from "react";
 import { User, Star } from "lucide-react";
 import "./Testimonials.css";
 
